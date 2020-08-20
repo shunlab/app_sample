@@ -1,0 +1,81 @@
+From 3332a98da84d9ad9ec918feedb0aefc0bfceed52 Mon Sep 17 00:00:00 2001
+From: Petko Bordjukov <bordjukov@gmail.com>
+Date: Tue, 28 Feb 2017 00:04:26 +0200
+Subject: [PATCH 2/5] Don't compile unnecessary stuff
+
+---
+ Makefile         |  7 +------
+ gypfiles/all.gyp | 32 --------------------------------
+ 2 files changed, 1 insertion(+), 38 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 299d4aa09c..16d8d2dd11 100644
+--- a/Makefile
++++ b/Makefile
+@@ -270,12 +270,7 @@ GYPFILES = third_party/icu/icu.gypi third_party/icu/icu.gyp \
+ 	   gypfiles/shim_headers.gypi gypfiles/features.gypi \
+            gypfiles/standalone.gypi \
+ 	   gypfiles/toolchain.gypi gypfiles/all.gyp gypfiles/mac/asan.gyp \
+-	   test/cctest/cctest.gyp test/fuzzer/fuzzer.gyp \
+-	   test/unittests/unittests.gyp src/v8.gyp \
+-	   tools/parser-shell.gyp testing/gmock.gyp testing/gtest.gyp \
+-	   buildtools/third_party/libc++abi/libc++abi.gyp \
+-	   buildtools/third_party/libc++/libc++.gyp samples/samples.gyp \
+-	   src/third_party/vtune/v8vtune.gyp src/d8.gyp
++           src/v8.gyp tools/parser-shell.gyp src/d8.gyp
+ 
+ # If vtunejit=on, the v8vtune.gyp will be appended.
+ ifeq ($(vtunejit), on)
+diff --git a/gypfiles/all.gyp b/gypfiles/all.gyp
+index bbad66741c..96820a0ecc 100644
+--- a/gypfiles/all.gyp
++++ b/gypfiles/all.gyp
+@@ -9,7 +9,6 @@
+       'type': 'none',
+       'dependencies': [
+         '../src/d8.gyp:d8',
+-        '../test/inspector/inspector.gyp:*',
+       ],
+       'conditions': [
+         ['component!="shared_library"', {
+@@ -17,37 +16,6 @@
+             '../tools/parser-shell.gyp:parser-shell',
+           ],
+         }],
+-        # These items don't compile for Android on Mac.
+-        ['host_os!="mac" or OS!="android"', {
+-          'dependencies': [
+-            '../samples/samples.gyp:*',
+-            '../test/cctest/cctest.gyp:*',
+-            '../test/fuzzer/fuzzer.gyp:*',
+-            '../test/unittests/unittests.gyp:*',
+-          ],
+-        }],
+-        ['test_isolation_mode != "noop"', {
+-          'dependencies': [
+-            '../test/bot_default.gyp:*',
+-            '../test/benchmarks/benchmarks.gyp:*',
+-            '../test/debugger/debugger.gyp:*',
+-            '../test/default.gyp:*',
+-            '../test/intl/intl.gyp:*',
+-            '../test/message/message.gyp:*',
+-            '../test/mjsunit/mjsunit.gyp:*',
+-            '../test/mozilla/mozilla.gyp:*',
+-            '../test/optimize_for_size.gyp:*',
+-            '../test/perf.gyp:*',
+-            '../test/preparser/preparser.gyp:*',
+-            '../test/test262/test262.gyp:*',
+-            '../test/webkit/webkit.gyp:*',
+-            '../tools/check-static-initializers.gyp:*',
+-            '../tools/gcmole/run_gcmole.gyp:*',
+-            '../tools/jsfunfuzz/jsfunfuzz.gyp:*',
+-            '../tools/run-deopt-fuzzer.gyp:*',
+-            '../tools/run-valgrind.gyp:*',
+-          ],
+-        }],
+       ]
+     }
+   ]
+-- 
+2.13.3
+

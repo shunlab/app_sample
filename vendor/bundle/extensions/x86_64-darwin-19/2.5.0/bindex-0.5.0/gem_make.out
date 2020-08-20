@@ -1,0 +1,15 @@
+current directory: /Users/sakaishunyuu/app_sample/vendor/bundle/gems/bindex-0.5.0/ext/bindex
+/Users/sakaishunyuu/.rbenv/versions/2.5.8/bin/ruby -r ./siteconf20200805-52194-hkkhbl.rb extconf.rb
+creating Makefile
+
+current directory: /Users/sakaishunyuu/app_sample/vendor/bundle/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR=" clean
+
+current directory: /Users/sakaishunyuu/app_sample/vendor/bundle/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR="
+compiling cruby.c
+linking shared-object bindex/cruby.bundle
+
+current directory: /Users/sakaishunyuu/app_sample/vendor/bundle/gems/bindex-0.5.0/ext/bindex
+make "DESTDIR=" install
+/usr/bin/install -c -m 0755 cruby.bundle ./.gem.20200805-52194-1izb9e9/bindex
