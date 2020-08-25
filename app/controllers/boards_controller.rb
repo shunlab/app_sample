@@ -29,18 +29,26 @@ class BoardsController < ApplicationController
   end
 
   def update
-    @board.update(board_params)
+    if @board.update(board_params)
+      flash[:notice] = "「#{@board.title}」の掲示板を編集しました"
+      redirect_to @board
+    else
+      redirect_back fallback_location: root_path, flash: {
+        board: @board,
+        error_messages: @board.errors.full_messages
+      }
+    end
 
-    redirect_to board
   end
   def destroy
-    @board.delete
+    @board.destroy
     redirect_to boards_path, flash: { notice: "「#{@board.title}」の掲示板が削除されました" }
   end
+
   private
 
   def board_params
-    params.require(:board).permit(:name, :title, :body)
+    params.require(:board).permit(:name, :title, :body, tag_ids: [])
   end
 
   def set_target_board
